@@ -1,0 +1,20 @@
+Tasks:
+# Draft the Technical Document (M1)
+Architecture: Define the project components (containers/microservices).
+
+
+Communication: Describe how these components will interact with each other (e.g., HTTP requests or message queues).
+
+
+Technologies: List the programming languages and tools you plan to use (e.g., Node.js, Python, MongoDB, Kong).
+
+Responsibilities: Clearly define the tasks for each team member.
+
+# Infrastructure Setup
+
+Docker Registry: Create an account on Docker Hub (or another registry).
+
+
+Repositories: Set up individual repositories for each component of your project to prepare for future development and CI/CD integration.
+
+
