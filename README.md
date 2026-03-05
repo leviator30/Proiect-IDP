@@ -1,7 +1,10 @@
 # Proiect-IDP
 
 
-Blueprint Sharing & Versioning Portal:
+Factorio Blueprint Sharing & Versioning Portal:
+
+# Context
+Factorio is an automation game which uses blueprints to store different setups. These are stored and distributed as strings.
 
 # I.Microservices:
 ## 1.Blueprint-Manager
