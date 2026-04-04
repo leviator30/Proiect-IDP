@@ -1,12 +1,20 @@
-# Use an official Python runtime as a parent image
-FROM python:3.11-slim
+# Folosim o imagine oficială de Python ușoară
+FROM python:3.10-slim
 
-# Set the working directory in the container
+# Setăm directorul de lucru în container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY login.py .
+# Copiem fișierul cu dependențe (îl vom crea la pasul următor)
+COPY requirements.txt .
 
-# Run the script when the container launches
-# We use -u to force the stdout/stderr streams to be unbuffered
-CMD ["python", "-u", "login.py"]
+# Instalăm librăriile necesare
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiem codul sursă al microserviciului
+COPY auth_service.py .
+
+# Expunem portul pe care rulează FastAPI (standard este 8000)
+EXPOSE 8000
+
+# Comanda de pornire a serviciului
+CMD ["uvicorn", "auth_service:app", "--host", "0.0.0.0", "--port", "8000"]
