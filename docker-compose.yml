@@ -1,11 +1,14 @@
 services:
+  # --- Infrastructure ---
   mongodb:
     image: mongo:latest
     container_name: factorio-db
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db
+      - ./my-db-folder:/data/db
+    networks:
+      - factorio-network
 
   mongo-express:
     image: mongo-express:latest
@@ -16,8 +19,31 @@ services:
       - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
-      ME_CONFIG_BASICAUTH_USERNAME: admin  # Change this
-      ME_CONFIG_BASICAUTH_PASSWORD: admin  # Change this
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin 
+    networks:
+      - factorio-network
 
-volumes:
-  mongo-data:
+    # --- Microservices ---
+  persistence-bridge:
+    build: ./persistence-bridge
+    container_name: persistence-bridge
+    depends_on:
+      - mongodb
+      - validator-service
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/blueprints_db
+      - VALIDATOR_URL=http://validator-service:3000/validate
+    networks:
+      - factorio-network
+  validator-service:
+    build: ./validator-service
+    container_name: validator-service
+    networks:
+      - factorio-network
+
+networks:
+  factorio-network:
+    driver: bridge
