@@ -6,7 +6,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./my-db-folder:/data/db
+      - mongo-data:/data/db
     networks:
       - factorio-network
 
@@ -110,6 +110,7 @@ services:
 
 volumes:
   kong_data:
+  mongo-data:
 
 networks:
   factorio-network:
