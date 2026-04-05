@@ -6,7 +6,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./my-db-folder:/data/db
+      - mongo-data:/data/db
     networks:
       - factorio-network
 
@@ -55,6 +55,15 @@ services:
     container_name: validator-service
     networks:
       - factorio-network
+  logic-service:
+    build: ./logic-service
+    container_name: logic-service
+    depends_on:
+      - persistence-bridge
+    networks:
+      - factorio-network
+    # Note: We won't expose ports here. 
+    # Eventually, Kong API Gateway will handle the entry point.
 
   kong-db:
     image: postgres:13
@@ -101,6 +110,7 @@ services:
 
 volumes:
   kong_data:
+  mongo-data:
 
 networks:
   factorio-network:
