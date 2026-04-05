@@ -58,6 +58,15 @@ services:
     container_name: validator-service
     networks:
       - factorio-network
+  logic-service:
+    build: ./logic-service
+    container_name: logic-service
+    depends_on:
+      - persistence-bridge
+    networks:
+      - factorio-network
+    # Note: We won't expose ports here. 
+    # Eventually, Kong API Gateway will handle the entry point.
 
 networks:
   factorio-network:
