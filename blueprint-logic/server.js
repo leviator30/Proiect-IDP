@@ -10,6 +10,7 @@ app.post('/api/blueprints/share', async (req, res) => {
     try {
         const { title, blueprintString, author } = req.body;
 
+        const author = req.headers['x-user-name'] || "Anonymous";
         // Business Rule: Check for minimum title length
         if (!title || title.length < 3) {
             return res.status(400).send({ error: "Title too short" });
