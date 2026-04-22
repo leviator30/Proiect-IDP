@@ -56,10 +56,12 @@ services:
     networks:
       - factorio-network
   logic-service:
-    build: ./logic-service
+    build: ./blueprint-logic
     container_name: logic-service
     depends_on:
       - persistence-bridge
+    ports:
+      - "5000:3000" # Maps [Host Port]:[Container Port]
     networks:
       - factorio-network
     # Note: We won't expose ports here. 

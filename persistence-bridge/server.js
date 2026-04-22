@@ -54,4 +54,26 @@ app.get('/blueprints', async (req, res) => {
   res.send(blueprints);
 });
 
+app.get('/blueprints/:id', async (req, res) => {
+  try {
+    const blueprint = await Blueprint.findById(req.params.id);
+    if (!blueprint) return res.status(404).send("Not found");
+    res.send(blueprint);
+  } catch (error) {
+    res.status(500).send("Invalid ID format");
+  }
+});
+
+
+// DELETE: Remove a blueprint by ID
+app.delete('/blueprints/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Blueprint.findByIdAndDelete(id);
+    if (!result) return res.status(404).send("Blueprint not found");
+    res.send({ message: "Deleted successfully" });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 app.listen(3000, () => console.log('Persistence Bridge running on port 3000'));
