@@ -60,8 +60,8 @@ services:
     container_name: logic-service
     depends_on:
       - persistence-bridge
-    ports:
-      - "5000:3000" # Maps [Host Port]:[Container Port]
+    # ports:
+    #   - "5000:3000" # Maps [Host Port]:[Container Port]
     networks:
       - factorio-network
     # Note: We won't expose ports here. 
